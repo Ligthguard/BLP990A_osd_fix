@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="76dp"
+        android:onClick="openDeviceWithCustomValuesOnClick"
+        android:text="TWUtil.open"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="toggleHVACScreen"
+        android:text="Try to toggle HVAC screen"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="696dp"
+        android:layout_marginTop="140dp"
+        android:onClick="clearLog"
+        android:text="Clear log"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="140dp"
+        android:onClick="attachHandler"
+        android:text="Attach handler"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/textView"
+        android:layout_width="791dp"
+        android:layout_height="231dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="224dp"
+        android:duplicateParentState="false"
+        android:editable="false"
+        android:ems="10"
+        android:fadeScrollbars="false"
+        android:focusable="false"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:scrollIndicators="top|left|bottom|right"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarSize="15dp"
+        android:scrollbars="horizontal|vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/idList"
+        android:layout_width="639dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="76dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:numeric="integer"
+        android:singleLine="true"
+        android:text="513 515 769 1281 -24804 -25080 -25059 -15872 773 1288 266"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="140dp"
+        android:text="TWUtil.Close"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Switch
+        android:id="@+id/rangeModeSwitch"
+        android:layout_width="148dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="340dp"
+        android:layout_marginTop="140dp"
+        android:checked="false"
+        android:clickable="true"
+        android:text="Range mode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:checked="false" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
