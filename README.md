@@ -13,3 +13,8 @@ At least in my case, the head unit is equipped with a Bluesoleil IVT i140 blueto
 Bluetooth:
 
 For this one, you'll need root access. You have to extract the contents of gocsdk.zip, then copy gocsdk binary to /system/bin directory, gocsdk6, gocsdk8 and config.ini to /system/etc/goc directory.
+
+Boot animation:
+
+I didn't like the huge Android text while booting so i created a boot animation with a Volvo logo from this video: https://www.youtube.com/watch?v=UoDvfYv4Ouo
+It is usable with the original software too, just copy the bootanimation.zip to the root of a pendrive, plug it into the head unit, find the Bootanimation app in the menu (has an S like logo), press the three dots (context menu) then press the import button on the bottom of the screen. It'll ask for password, type Topway (pay attention to the uppercase T at the beginning) then it'll show the bootanimation from the pendrive, just select it and press ok in the newly opened window.
