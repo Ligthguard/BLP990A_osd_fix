@@ -70,17 +70,21 @@ public class MainActivity extends AppCompatActivity {
                 short start = Short.parseShort(parts[0]);
                 short end = Short.parseShort(parts[1]);
 
-                if(end >= start)
+                if(start >= end)
                 {
                     AppendLogText("Range start should be smaller than range end.");
                     return;
                 }
 
                 short[] values = new short[end - start + 1];
-                for(short i=start; i<=end; ++i)
-                    values[i] = i;
+                StringBuilder logtext = new StringBuilder();
+                for(short i=0; i<=(end - start); ++i)
+                {
+                    values[i] = (short)(start + i);
+                    logtext.append(String.valueOf(values[i])).append(" ");
+                }
 
-                AppendLogText("Opening /dev/tw with values: " + _values);
+                AppendLogText("Opening /dev/tw with values: " + logtext);
                 m_test.open(values);
             }
         }
@@ -109,6 +113,27 @@ public class MainActivity extends AppCompatActivity {
             m_test.TryToggleHVACScreen();
         }
         catch (Exception e)
+        {
+            AppendLogText(e.getMessage());
+        }
+    }
+
+    public void write(View view)
+    {
+        try
+        {
+            short op = Short.parseShort(((TextView)findViewById(R.id.opTextBox)).getText().toString());
+            short arg1 = Short.parseShort(((TextView)findViewById(R.id.arg1TextBox)).getText().toString());
+            short arg2 = Short.parseShort(((TextView)findViewById(R.id.arg2TextBox)).getText().toString());
+
+            if(m_test != null)
+            {
+                m_test.write(op, arg1, arg2);
+            }
+            else
+                AppendLogText("Write: Device not open!");
+        }
+        catch(Exception e)
         {
             AppendLogText(e.getMessage());
         }

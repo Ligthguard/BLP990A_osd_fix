@@ -53,6 +53,7 @@ public class TWUtilTest
             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(m_activity);
             dlgAlert.setMessage("Failed to open /dev/tw with these params.");
             dlgAlert.setTitle("Failed to open /dev/tw");
+            m_activity.AppendLogText("Failed to open /dev/tw!");
             dlgAlert.setPositiveButton("OK", null);
             dlgAlert.setCancelable(true);
             dlgAlert.create().show();
@@ -68,6 +69,24 @@ public class TWUtilTest
             m_TW.close();
 
         m_openSuccess = false;
+    }
+
+    public void write(short op, short arg1, short arg2)
+    {
+        if(m_openSuccess)
+        {
+            int result = 0;
+            if(arg2 > 0)
+                result = m_TW.write(op, arg1, arg2);
+            else if(arg1 > 0)
+                result = m_TW.write(op, arg1);
+            else
+                result = m_TW.write(op);
+
+            m_activity.AppendLogText("Write result: " + String.valueOf(result));
+        }
+        else
+            m_activity.AppendLogText("Write: Device not open!");
     }
 
     public void TryToggleHVACScreen()
