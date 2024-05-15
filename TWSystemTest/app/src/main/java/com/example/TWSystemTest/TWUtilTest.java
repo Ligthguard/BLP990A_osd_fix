@@ -6,8 +6,31 @@ import android.os.Handler;
 import android.os.Message;
 import android.tw.john.TWUtil;
 
+import java.nio.charset.StandardCharsets;
+
 public class TWUtilTest
 {
+    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+    public static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = HEX_ARRAY[v >>> 4];
+            hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
+
+    public static byte[] hexStringToByteArray(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                    + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
+    }
+
     private final TWUtil m_TW = new TWUtil();
     private boolean m_openSuccess = false;
     static MainActivity m_activity = null;
@@ -23,7 +46,33 @@ public class TWUtilTest
         {
             try
             {
-                String out = "op: " + String.valueOf(msg.what) + " arg1: " + String.valueOf(msg.arg1) + " arg2: " + String.valueOf(msg.arg2);
+                String hex = "";
+                String objAsString = "";
+                if(msg.obj != null)
+                {
+                    try
+                    {
+                        hex = bytesToHex((byte[])msg.obj);
+                    }
+                    catch(Exception e)
+                    {
+                        hex = "Failed to convert obj to hex string";
+                    }
+
+                    try
+                    {
+                        objAsString = new String((byte[])msg.obj, StandardCharsets.UTF_8);
+                    }
+                    catch(Exception e)
+                    {
+                        objAsString = "Failed to convert obj to string";
+                    }
+                }
+                String out = "## op: " + String.valueOf(msg.what) + " arg1: " + String.valueOf(msg.arg1) + " arg2: " + String.valueOf(msg.arg2);
+                if(!hex.isEmpty())
+                    out += "  ## obj (hex): " + hex;
+                if(!objAsString.isEmpty())
+                    out += "  ## obj (str): " + objAsString;
                 m_activity.AppendLogText(out);
             }
             catch (Exception e)
@@ -71,19 +120,32 @@ public class TWUtilTest
         m_openSuccess = false;
     }
 
-    public void write(short op, short arg1, short arg2)
+    public void write(short op, short arg1, short arg2, String objBytes)
     {
         if(m_openSuccess)
         {
             int result = 0;
-            if(arg2 > 0)
+            if(!objBytes.isEmpty())
+            {
+                try
+                {
+                    byte[] bytes = hexStringToByteArray(objBytes);
+                    result = m_TW.write(op, arg1, arg2, bytes);
+                }
+                catch (Exception e)
+                {
+                    m_activity.AppendLogText("Write failed while parsing byte array: " + e.getMessage());
+                    return;
+                }
+            }
+            else if(arg2 > 0)
                 result = m_TW.write(op, arg1, arg2);
             else if(arg1 > 0)
                 result = m_TW.write(op, arg1);
             else
                 result = m_TW.write(op);
 
-            m_activity.AppendLogText("Write result: " + String.valueOf(result));
+            m_activity.AppendLogText("Write(" + op + ", " + arg1 + ", " + arg2 + ", {" + objBytes + "}) result: " + String.valueOf(result));
         }
         else
             m_activity.AppendLogText("Write: Device not open!");

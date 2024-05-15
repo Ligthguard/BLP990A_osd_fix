@@ -125,10 +125,11 @@ public class MainActivity extends AppCompatActivity {
             short op = Short.parseShort(((TextView)findViewById(R.id.opTextBox)).getText().toString());
             short arg1 = Short.parseShort(((TextView)findViewById(R.id.arg1TextBox)).getText().toString());
             short arg2 = Short.parseShort(((TextView)findViewById(R.id.arg2TextBox)).getText().toString());
+            String objBytes = ((TextView)findViewById(R.id.objBytesTextBox)).getText().toString();
 
             if(m_test != null)
             {
-                m_test.write(op, arg1, arg2);
+                m_test.write(op, arg1, arg2, objBytes);
             }
             else
                 AppendLogText("Write: Device not open!");
